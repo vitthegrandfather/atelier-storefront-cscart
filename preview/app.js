@@ -1,36 +1,42 @@
-const menuButton = document.querySelector('.menu-button');
-const nav = document.querySelector('#primary-nav');
-const filters = document.querySelectorAll('[data-filter]');
-const products = document.querySelectorAll('[data-category]');
-const addButtons = document.querySelectorAll('[data-product]');
-const cartCount = document.querySelector('[data-cart-count]');
-const toast = document.querySelector('.toast');
-let count = 0;
+const products = [
+  {id:'frame-chair',name:'Frame Lounge Chair',category:'living',material:'FSC oak, woven cord',price:680,badge:'Bestseller',image:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1000&q=85',description:'A low, generous lounge chair built around a solid oak frame and hand-woven paper cord seat.',details:['Solid FSC-certified oak','Hand-woven paper cord','W 72 × D 78 × H 71 cm']},
+  {id:'pivot-light',name:'Pivot Task Light',category:'workspace',material:'Powder-coated steel',price:240,badge:'',image:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85',description:'A precise, counterweighted task light with warm, dimmable illumination.',details:['Powder-coated steel','Integrated dimmable LED','H 48 cm, 2 m cord']},
+  {id:'still-vessel',name:'Still Glass Vessel',category:'objects',material:'Hand-formed glass',price:115,badge:'New',image:'https://images.unsplash.com/photo-1615800002234-05c4d488696c?auto=format&fit=crop&w=1000&q=85',description:'A softly irregular vessel shaped by hand. Each piece carries subtle variations.',details:['Recycled soda-lime glass','Dishwasher safe','H 24 × Ø 15 cm']},
+  {id:'line-desk',name:'Line Writing Desk',category:'workspace',material:'Oak veneer, solid ash',price:920,badge:'',image:'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=1000&q=85',description:'A compact writing desk with a slim drawer and cable management concealed at the rear.',details:['Oak veneer and solid ash','Soft-close drawer','W 125 × D 60 × H 74 cm']},
+  {id:'fold-stool',name:'Fold Side Stool',category:'living',material:'Oiled walnut',price:310,badge:'',image:'https://images.unsplash.com/photo-1532372320572-cda25653a694?auto=format&fit=crop&w=1000&q=85',description:'A small, versatile stool with intersecting planes and softened hand-finished edges.',details:['Solid American walnut','Natural hard-wax oil','W 38 × D 32 × H 44 cm']},
+  {id:'arc-lamp',name:'Arc Floor Lamp',category:'living',material:'Linen, brushed steel',price:540,badge:'Low stock',image:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1000&q=85',description:'A slender floor light with a linen shade that casts a broad, warm pool of light.',details:['Brushed stainless steel','Natural linen shade','H 152 × Ø 38 cm']},
+  {id:'field-tray',name:'Field Catchall Tray',category:'objects',material:'Pressed cork',price:78,badge:'',image:'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1000&q=85',description:'A tactile cork tray for keys, desk tools, and the small objects that travel with you.',details:['Portuguese cork','Water-resistant finish','W 28 × D 18 × H 3 cm']},
+  {id:'column-shelf',name:'Column Book Stand',category:'workspace',material:'Cast aluminium',price:165,badge:'New',image:'https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&w=1000&q=85',description:'A weighted book stand for cookbooks, references, or a single object on display.',details:['Recycled cast aluminium','Felted base','W 24 × D 18 × H 22 cm']}
+];
+
+const $ = (selector, scope=document) => scope.querySelector(selector);
+const $$ = (selector, scope=document) => [...scope.querySelectorAll(selector)];
+const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(value);
+const state = {filter:'all',sort:'featured',cart:[]};
+const els = {grid:$('[data-product-grid]'),count:$('[data-result-count]'),cartCount:$('[data-cart-count]'),drawer:$('[data-cart-drawer]'),overlay:$('[data-overlay]'),lines:$('[data-cart-lines]'),empty:$('[data-cart-empty]'),summary:$('[data-cart-summary]'),total:$('[data-cart-total]'),search:$('[data-search-panel]'),searchInput:$('[data-search-input]'),searchResults:$('[data-search-results]'),productDialog:$('[data-product-dialog]'),productDetail:$('[data-product-detail]'),checkout:$('[data-checkout-dialog]'),toast:$('.toast')};
 let toastTimer;
 
-menuButton.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!open));
-  nav.classList.toggle('is-open', !open);
-});
+function notify(message){els.toast.textContent=message;els.toast.classList.add('is-visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>els.toast.classList.remove('is-visible'),2600)}
+function productCard(product){return `<article class="product" data-id="${product.id}"><button class="product__image" type="button" data-view="${product.id}" aria-label="View ${product.name}"><img src="${product.image}" alt="${product.name}" loading="lazy">${product.badge?`<span>${product.badge}</span>`:''}</button><div class="product__meta"><button type="button" data-view="${product.id}"><h3>${product.name}</h3><p>${product.material}</p></button><strong>${money(product.price)}</strong></div><button class="product__add" type="button" data-add="${product.id}">Add to bag</button></article>`}
+function renderProducts(){let list=products.filter(p=>state.filter==='all'||p.category===state.filter);if(state.sort==='low')list.sort((a,b)=>a.price-b.price);if(state.sort==='high')list.sort((a,b)=>b.price-a.price);els.grid.innerHTML=list.map(productCard).join('');els.count.textContent=list.length;bindProductActions()}
+function bindProductActions(){$$('[data-view]').forEach(button=>button.addEventListener('click',()=>openProduct(button.dataset.view)));$$('[data-add]').forEach(button=>button.addEventListener('click',()=>addToCart(button.dataset.add)))}
+function addToCart(id,quantity=1){const item=state.cart.find(line=>line.id===id);if(item)item.quantity+=quantity;else state.cart.push({id,quantity});renderCart();notify(`${products.find(p=>p.id===id).name} added to the demo bag.`)}
+function renderCart(){const totalItems=state.cart.reduce((sum,line)=>sum+line.quantity,0);els.cartCount.textContent=totalItems;els.lines.innerHTML=state.cart.map(line=>{const p=products.find(item=>item.id===line.id);return `<article class="cart-line"><img src="${p.image}" alt=""><div><h3>${p.name}</h3><p>${p.material}</p><div class="quantity"><button type="button" data-qty="${p.id}" data-delta="-1" aria-label="Decrease ${p.name} quantity">−</button><span>${line.quantity}</span><button type="button" data-qty="${p.id}" data-delta="1" aria-label="Increase ${p.name} quantity">+</button></div></div><strong>${money(p.price*line.quantity)}</strong></article>`}).join('');els.empty.hidden=state.cart.length>0;els.summary.hidden=state.cart.length===0;els.total.textContent=money(state.cart.reduce((sum,line)=>sum+products.find(p=>p.id===line.id).price*line.quantity,0));$$('[data-qty]').forEach(button=>button.addEventListener('click',()=>changeQuantity(button.dataset.qty,Number(button.dataset.delta))))}
+function changeQuantity(id,delta){const item=state.cart.find(line=>line.id===id);item.quantity+=delta;if(item.quantity<1)state.cart=state.cart.filter(line=>line.id!==id);renderCart()}
+function openLayer(layer){els.overlay.hidden=false;requestAnimationFrame(()=>{els.overlay.classList.add('is-visible');layer.classList.add('is-open');layer.setAttribute('aria-hidden','false')});document.body.classList.add('locked')}
+function closeLayers(){els.overlay.classList.remove('is-visible');els.drawer.classList.remove('is-open');els.search.classList.remove('is-open');els.drawer.setAttribute('aria-hidden','true');els.search.setAttribute('aria-hidden','true');document.body.classList.remove('locked');setTimeout(()=>{els.overlay.hidden=true},220)}
+function openProduct(id){const p=products.find(item=>item.id===id);els.productDetail.innerHTML=`<div class="product-detail"><div class="product-detail__media"><img src="${p.image}" alt="${p.name}"></div><div class="product-detail__copy"><p class="edition">${p.category}</p><h2>${p.name}</h2><p class="product-price">${money(p.price)}</p><p>${p.description}</p><label>Finish<select><option>Natural</option><option>Dark</option></select></label><button class="button button--primary button--wide" type="button" data-dialog-add="${p.id}">Add to bag</button><details open><summary>Materials and dimensions</summary><ul>${p.details.map(detail=>`<li>${detail}</li>`).join('')}</ul></details><details><summary>Delivery and returns</summary><p>Dispatches within 48 hours. Complimentary delivery and 30-day returns.</p></details></div></div>`;els.productDialog.showModal();$('[data-dialog-add]').addEventListener('click',()=>{addToCart(id);els.productDialog.close();openLayer(els.drawer)})}
+function renderSearch(query=''){const term=query.trim().toLowerCase();if(!term){els.searchResults.innerHTML='<p>Start typing to search eight selected objects.</p>';return}const found=products.filter(p=>`${p.name} ${p.material} ${p.category}`.toLowerCase().includes(term));els.searchResults.innerHTML=found.length?found.map(p=>`<button type="button" data-search-product="${p.id}"><img src="${p.image}" alt=""><span><strong>${p.name}</strong><small>${p.material}</small></span><b>${money(p.price)}</b></button>`).join(''):`<div class="no-results"><h3>No objects found.</h3><p>Try a material such as oak or a category such as lighting.</p></div>`;$$('[data-search-product]').forEach(button=>button.addEventListener('click',()=>{closeLayers();openProduct(button.dataset.searchProduct)}))}
 
-filters.forEach((button) => {
-  button.addEventListener('click', () => {
-    filters.forEach((item) => item.classList.remove('is-active'));
-    button.classList.add('is-active');
-    products.forEach((product) => {
-      product.hidden = button.dataset.filter !== 'all' && product.dataset.category !== button.dataset.filter;
-    });
-  });
-});
-
-addButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    count += 1;
-    cartCount.textContent = String(count);
-    toast.textContent = `${button.dataset.product} added to the demo bag.`;
-    toast.classList.add('is-visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2400);
-  });
-});
+$('.menu-button').addEventListener('click',event=>{const open=event.currentTarget.getAttribute('aria-expanded')==='true';event.currentTarget.setAttribute('aria-expanded',String(!open));$('#primary-nav').classList.toggle('is-open',!open)});
+$$('#primary-nav a').forEach(link=>link.addEventListener('click',()=>{$('#primary-nav').classList.remove('is-open');$('.menu-button').setAttribute('aria-expanded','false')}));
+$$('[data-filter]').forEach(button=>button.addEventListener('click',()=>{$$('[data-filter]').forEach(item=>item.classList.remove('is-active'));button.classList.add('is-active');state.filter=button.dataset.filter;renderProducts()}));
+$('[data-sort]').addEventListener('change',event=>{state.sort=event.target.value;renderProducts()});
+$('[data-open-cart]').addEventListener('click',()=>openLayer(els.drawer));$$('[data-close-cart]').forEach(button=>button.addEventListener('click',closeLayers));
+$('[data-open-search]').addEventListener('click',()=>{openLayer(els.search);setTimeout(()=>els.searchInput.focus(),220)});$('[data-close-search]').addEventListener('click',closeLayers);els.overlay.addEventListener('click',closeLayers);els.searchInput.addEventListener('input',event=>renderSearch(event.target.value));
+$('[data-close-product]').addEventListener('click',()=>els.productDialog.close());$('[data-close-checkout]').addEventListener('click',()=>els.checkout.close());
+$('[data-checkout]').addEventListener('click',()=>{closeLayers();els.checkout.showModal()});
+$('[data-checkout-form]').addEventListener('submit',event=>{event.preventDefault();els.checkout.close();state.cart=[];renderCart();notify('Simulated order complete. No payment or order was created.')});
+$('[data-newsletter]').addEventListener('submit',event=>{event.preventDefault();event.currentTarget.reset();notify('Demo signup saved locally. No email was sent.')});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeLayers()});
+renderProducts();renderCart();

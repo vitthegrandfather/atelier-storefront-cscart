@@ -24,6 +24,17 @@ test('controls expose labels and live feedback', () => {
   assert.match(js, /aria-expanded/);
 });
 
+test('preview includes a substantial commerce flow', () => {
+  assert.match(html, /data-product-grid/);
+  assert.match(html, /data-search-panel/);
+  assert.match(html, /data-cart-drawer/);
+  assert.match(html, /data-checkout-form/);
+  assert.match(js, /const products = \[/);
+  assert.match(js, /renderSearch/);
+  assert.match(js, /renderCart/);
+  assert.match(js, /Simulated order complete/);
+});
+
 test('visible copy contains no dash punctuation', () => {
   assert.equal(/[–—]/.test(html), false);
 });

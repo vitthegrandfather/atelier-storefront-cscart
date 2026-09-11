@@ -1,86 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive visual preview for the fictional Atelier Supply CS-Cart customization demo.">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive storefront preview for the fictional Atelier Supply CS-Cart customization demo.">
   <title>Atelier Supply | CS-Cart storefront demo</title>
-  <link rel="preconnect" href="https://images.unsplash.com">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="preconnect" href="https://images.unsplash.com"><link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
 </head>
 <body>
-  <div class="demo-note">Portfolio demo. Products, orders, and checkout are fictional.</div>
+  <div class="demo-note">Interactive Portfolio demo. Products, orders, and checkout are fictional.</div>
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Atelier Supply home">ATELIER <span>SUPPLY</span></a>
+    <a class="brand" href="#home" aria-label="Atelier Supply home">ATELIER <span>SUPPLY</span></a>
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
-    <nav id="primary-nav" aria-label="Primary navigation">
-      <a href="#collection">New objects</a>
-      <a href="#collection">Living</a>
-      <a href="#collection">Workspace</a>
-      <a href="#journal">Journal</a>
-    </nav>
-    <button class="cart-button" type="button">Bag <span data-cart-count>0</span></button>
+    <nav id="primary-nav" aria-label="Primary navigation"><a href="#shop">Shop</a><a href="#shop">Living</a><a href="#shop">Workspace</a><a href="#journal">Journal</a></nav>
+    <div class="header-actions"><button class="text-button" type="button" data-open-search>Search</button><button class="cart-button" type="button" data-open-cart>Bag <span data-cart-count>0</span></button></div>
   </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="hero__copy">
-        <span class="eyebrow">Edition 04</span>
-        <h1>Objects with a quieter presence.</h1>
-        <p>Functional pieces selected for material honesty, daily usefulness, and a long life at home.</p>
-        <a class="button button--primary" href="#collection">Explore the collection</a>
-      </div>
-      <figure class="hero__media">
-        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Sculptural chair and floor lamp in a calm modern interior">
-        <figcaption>Quiet utility for considered spaces</figcaption>
-      </figure>
+  <main id="home">
+    <section class="hero"><div class="hero__copy"><p class="edition">Collection 04</p><h1>Objects with a quieter presence.</h1><p>Functional pieces selected for material honesty, daily usefulness, and a long life at home.</p><a class="button button--primary" href="#shop">Explore all objects</a></div><figure class="hero__media"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Sculptural chair and floor lamp in a calm modern interior"><figcaption>Quiet utility for considered spaces</figcaption></figure></section>
+    <section class="collection" id="shop">
+      <div class="collection-heading"><div><p class="edition">The full edit</p><h2>Made to stay in use.</h2><p class="section-copy">Furniture, lighting, and small objects chosen for honest materials and enduring function.</p></div><label class="sort">Sort <select data-sort><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></label></div>
+      <div class="shop-tools"><div class="filters" aria-label="Product filters"><button class="filter is-active" type="button" data-filter="all">All</button><button class="filter" type="button" data-filter="living">Living</button><button class="filter" type="button" data-filter="workspace">Workspace</button><button class="filter" type="button" data-filter="objects">Objects</button></div><p><span data-result-count>8</span> objects</p></div>
+      <div class="product-grid" data-product-grid></div>
     </section>
-
-    <section class="collection" id="collection">
-      <div class="section-heading">
-        <div><span class="eyebrow">Selected objects</span><h2>Made to stay in use.</h2></div>
-        <div class="filters" aria-label="Product filters">
-          <button class="filter is-active" type="button" data-filter="all">All</button>
-          <button class="filter" type="button" data-filter="living">Living</button>
-          <button class="filter" type="button" data-filter="workspace">Workspace</button>
-        </div>
-      </div>
-      <div class="product-grid">
-        <article class="product" data-category="living">
-          <div class="product__image"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Oak lounge chair with woven seat"></div>
-          <div class="product__meta"><div><h3>Frame Lounge Chair</h3><p>FSC oak, woven cord</p></div><strong>$680</strong></div>
-          <button class="product__add" type="button" data-product="Frame Lounge Chair">Add to bag</button>
-        </article>
-        <article class="product" data-category="workspace">
-          <div class="product__image"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Minimal black task lamp on a desk"></div>
-          <div class="product__meta"><div><h3>Pivot Task Light</h3><p>Powder coated steel</p></div><strong>$240</strong></div>
-          <button class="product__add" type="button" data-product="Pivot Task Light">Add to bag</button>
-        </article>
-        <article class="product" data-category="living">
-          <div class="product__image"><img src="https://images.unsplash.com/photo-1615800002234-05c4d488696c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Clear glass vessel on a neutral surface"></div>
-          <div class="product__meta"><div><h3>Still Glass Vessel</h3><p>Hand formed glass</p></div><strong>$115</strong></div>
-          <button class="product__add" type="button" data-product="Still Glass Vessel">Add to bag</button>
-        </article>
-      </div>
-    </section>
-
-    <section class="feature" id="journal">
-      <div class="feature__media"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Soft natural textures in a modern living room"></div>
-      <div class="feature__copy"><span class="eyebrow">Material journal</span><h2>Buy less. Choose with care.</h2><p>Our edit starts with useful forms and honest construction. Each object includes clear dimensions, materials, care, delivery, and returns.</p><a href="#collection">Read the selection notes <span aria-hidden="true">→</span></a></div>
-    </section>
-
-    <section class="service" aria-label="Purchase information">
-      <div class="service__intro"><span class="eyebrow">The Atelier standard</span><p>Clear fulfilment, considered packaging, and straightforward support after purchase.</p></div>
-      <div class="service__grid">
-        <article><span>01</span><div><strong>Complimentary delivery</strong><p>Tracked shipping on orders over $120.</p></div></article>
-        <article><span>02</span><div><strong>Secure checkout</strong><p>Protected payment flow managed by CS-Cart.</p></div></article>
-        <article><span>03</span><div><strong>Considered returns</strong><p>Start a return from your account within 30 days.</p></div></article>
-      </div>
-    </section>
+    <section class="feature" id="journal"><div class="feature__media"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Soft natural textures in a modern living room"></div><div class="feature__copy"><p class="edition">Material journal</p><h2>Buy less. Choose with care.</h2><p>Our edit starts with useful forms and honest construction. Each object includes clear dimensions, materials, care, delivery, and returns.</p><a href="#shop">Read the selection notes <span aria-hidden="true">→</span></a></div></section>
+    <section class="story"><div><p class="edition">Atelier Supply</p><h2>A slower standard for everyday things.</h2></div><div class="story__body"><p>We work with independent studios and established workshops that value repairable construction, responsible sourcing, and useful design.</p><dl><div><dt>10 years</dt><dd>minimum intended product life</dd></div><div><dt>30 days</dt><dd>considered returns window</dd></div><div><dt>48 hours</dt><dd>dispatch for stocked objects</dd></div></dl></div></section>
+    <section class="service" aria-label="Purchase information"><div class="service__intro"><p class="edition">The Atelier standard</p><p>Clear fulfilment, considered packaging, and straightforward support after purchase.</p></div><div class="service__grid"><article><span>01</span><div><strong>Complimentary delivery</strong><p>Tracked shipping on orders over $120.</p></div></article><article><span>02</span><div><strong>Secure checkout</strong><p>Protected payment flow in a production CS-Cart store.</p></div></article><article><span>03</span><div><strong>Considered returns</strong><p>Start a return from your account within 30 days.</p></div></article></div></section>
+    <section class="newsletter"><div><h2>Notes on useful living.</h2><p>Monthly stories about materials, makers, and objects worth keeping.</p></div><form data-newsletter><label>Email address<input required type="email" placeholder="you@example.com"></label><button class="button button--primary" type="submit">Join the journal</button></form></section>
   </main>
-
-  <footer><a class="brand" href="#top">ATELIER <span>SUPPLY</span></a><p>Fictional CS-Cart customization demo built with Smarty hooks, LESS, and progressive JavaScript.</p></footer>
+  <footer><a class="brand" href="#home">ATELIER <span>SUPPLY</span></a><div><p>Fictional CS-Cart customization demo built with Smarty hooks, LESS, and progressive JavaScript.</p><p><a href="https://github.com/vitthegrandfather/atelier-storefront-cscart">View source and add-on documentation</a></p></div></footer>
+  <div class="overlay" data-overlay hidden></div>
+  <aside class="drawer" data-cart-drawer aria-label="Shopping bag" aria-hidden="true"><div class="drawer__head"><div><p class="edition">Your selection</p><h2>Shopping bag</h2></div><button class="icon-button" type="button" data-close-cart aria-label="Close shopping bag">×</button></div><div class="cart-lines" data-cart-lines></div><div class="cart-empty" data-cart-empty><h3>Your bag is empty.</h3><p>Explore the collection and save an object here.</p><button class="button button--secondary" type="button" data-close-cart>Continue shopping</button></div><div class="cart-summary" data-cart-summary hidden><div><span>Subtotal</span><strong data-cart-total>$0</strong></div><p>Complimentary shipping over $120. Taxes calculated at checkout.</p><button class="button button--primary button--wide" type="button" data-checkout>Continue to checkout</button></div></aside>
+  <section class="search-panel" data-search-panel aria-label="Search products" aria-hidden="true"><div class="search-panel__head"><label>Search the collection<input type="search" placeholder="Try oak, lighting, workspace" data-search-input></label><button class="icon-button" type="button" data-close-search aria-label="Close search">×</button></div><div class="search-results" data-search-results><p>Start typing to search eight selected objects.</p></div></section>
+  <dialog class="product-dialog" data-product-dialog><button class="icon-button dialog-close" type="button" data-close-product aria-label="Close product details">×</button><div data-product-detail></div></dialog>
+  <dialog class="checkout-dialog" data-checkout-dialog><button class="icon-button dialog-close" type="button" data-close-checkout aria-label="Close checkout">×</button><div class="checkout-copy"><p class="edition">Demo checkout</p><h2>Complete your sample order.</h2><p>No payment, order, or personal data will be transmitted.</p></div><form data-checkout-form><div class="field-row"><label>First name<input required autocomplete="off"></label><label>Last name<input required autocomplete="off"></label></div><label>Email<input required type="email" autocomplete="off"></label><label>Delivery country<select><option>United States</option><option>United Kingdom</option><option>European Union</option></select></label><label>Address<input required autocomplete="off" placeholder="Demo address only"></label><button class="button button--primary button--wide" type="submit">Place simulated order</button></form></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

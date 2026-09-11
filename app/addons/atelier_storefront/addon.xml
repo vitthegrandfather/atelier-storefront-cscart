@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>atelier_storefront</id>
+    <version>1.1.0</version>
+    <priority>500</priority>
+    <position>500</position>
+    <status>disabled</status>
+    <default_language>en</default_language>
+    <name>Atelier Storefront Demo</name>
+    <description>Upgrade-safe retail UI customization using Smarty hooks, LESS tokens, and progressive JavaScript.</description>
+</addon>

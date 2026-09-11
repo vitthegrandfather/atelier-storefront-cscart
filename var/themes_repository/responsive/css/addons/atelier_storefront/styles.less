@@ -1,0 +1,148 @@
+@atelier-ink: #101820;
+@atelier-muted: #5d6770;
+@atelier-paper: #f4f6f7;
+@atelier-surface: #ffffff;
+@atelier-line: #d9dfe3;
+@atelier-accent: #135f66;
+@atelier-accent-dark: #0c474d;
+@atelier-radius: 10px;
+
+.tygh-content { color: @atelier-ink; }
+
+.ty-product-block-title,
+.ty-mainbox-title,
+.ty-subheader {
+    color: @atelier-ink;
+    letter-spacing: -0.025em;
+}
+
+.ty-btn {
+    border-radius: @atelier-radius;
+    box-shadow: none;
+    font-weight: 600;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+
+    &:active { transform: translateY(1px); }
+}
+
+.ty-btn__primary {
+    border-color: @atelier-accent;
+    background: @atelier-accent;
+
+    &:hover,
+    &:focus {
+        border-color: @atelier-accent-dark;
+        background: @atelier-accent-dark;
+    }
+}
+
+.ty-product-img,
+.ty-grid-list__image,
+.ty-compact-list__image {
+    overflow: hidden;
+    border-radius: @atelier-radius;
+    background: @atelier-paper;
+}
+
+.ty-grid-list__item {
+    .ty-grid-list__item-name { margin-top: 15px; }
+
+    .product-title {
+        color: @atelier-ink;
+        font-weight: 600;
+        line-height: 1.35;
+    }
+}
+
+.atelier-eyebrow {
+    color: @atelier-accent;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.atelier-product-service {
+    margin: 36px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid @atelier-line;
+
+    &__intro {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 18px;
+
+        p {
+            max-width: 490px;
+            margin: 0;
+            color: @atelier-muted;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid @atelier-line;
+        border-radius: @atelier-radius;
+        background: @atelier-surface;
+    }
+
+    &__item {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 12px;
+        min-height: 92px;
+        padding: 18px;
+
+        & + & { border-left: 1px solid @atelier-line; }
+
+        strong,
+        span { display: block; }
+
+        strong {
+            margin-bottom: 6px;
+            color: @atelier-ink;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+
+        span {
+            color: @atelier-muted;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    }
+
+    &__number {
+        color: @atelier-accent !important;
+        font-size: 10px !important;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+}
+
+@media (max-width: 767px) {
+    .atelier-product-service {
+        margin-top: 28px;
+
+        &__intro {
+            display: block;
+            p { margin-top: 8px; }
+        }
+
+        &__grid { grid-template-columns: 1fr; }
+
+        &__item + &__item {
+            border-top: 1px solid @atelier-line;
+            border-left: 0;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ty-btn { transition: none; }
+}

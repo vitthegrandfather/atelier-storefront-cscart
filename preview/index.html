@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive visual preview for the fictional Atelier Supply CS-Cart customization demo.">
+  <title>Atelier Supply | CS-Cart storefront demo</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="demo-note">Portfolio demo. Products, orders, and checkout are fictional.</div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Atelier Supply home">ATELIER <span>SUPPLY</span></a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <nav id="primary-nav" aria-label="Primary navigation">
+      <a href="#collection">New objects</a>
+      <a href="#collection">Living</a>
+      <a href="#collection">Workspace</a>
+      <a href="#journal">Journal</a>
+    </nav>
+    <button class="cart-button" type="button">Bag <span data-cart-count>0</span></button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__copy">
+        <span class="eyebrow">Edition 04</span>
+        <h1>Objects with a quieter presence.</h1>
+        <p>Functional pieces selected for material honesty, daily usefulness, and a long life at home.</p>
+        <a class="button button--primary" href="#collection">Explore the collection</a>
+      </div>
+      <figure class="hero__media">
+        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Sculptural chair and floor lamp in a calm modern interior">
+        <figcaption>Quiet utility for considered spaces</figcaption>
+      </figure>
+    </section>
+
+    <section class="collection" id="collection">
+      <div class="section-heading">
+        <div><span class="eyebrow">Selected objects</span><h2>Made to stay in use.</h2></div>
+        <div class="filters" aria-label="Product filters">
+          <button class="filter is-active" type="button" data-filter="all">All</button>
+          <button class="filter" type="button" data-filter="living">Living</button>
+          <button class="filter" type="button" data-filter="workspace">Workspace</button>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product" data-category="living">
+          <div class="product__image"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Oak lounge chair with woven seat"></div>
+          <div class="product__meta"><div><h3>Frame Lounge Chair</h3><p>FSC oak, woven cord</p></div><strong>$680</strong></div>
+          <button class="product__add" type="button" data-product="Frame Lounge Chair">Add to bag</button>
+        </article>
+        <article class="product" data-category="workspace">
+          <div class="product__image"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Minimal black task lamp on a desk"></div>
+          <div class="product__meta"><div><h3>Pivot Task Light</h3><p>Powder coated steel</p></div><strong>$240</strong></div>
+          <button class="product__add" type="button" data-product="Pivot Task Light">Add to bag</button>
+        </article>
+        <article class="product" data-category="living">
+          <div class="product__image"><img src="https://images.unsplash.com/photo-1615800002234-05c4d488696c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Clear glass vessel on a neutral surface"></div>
+          <div class="product__meta"><div><h3>Still Glass Vessel</h3><p>Hand formed glass</p></div><strong>$115</strong></div>
+          <button class="product__add" type="button" data-product="Still Glass Vessel">Add to bag</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="feature" id="journal">
+      <div class="feature__media"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&amp;fit=crop&amp;w=1500&amp;q=85" alt="Soft natural textures in a modern living room"></div>
+      <div class="feature__copy"><span class="eyebrow">Material journal</span><h2>Buy less. Choose with care.</h2><p>Our edit starts with useful forms and honest construction. Each object includes clear dimensions, materials, care, delivery, and returns.</p><a href="#collection">Read the selection notes <span aria-hidden="true">→</span></a></div>
+    </section>
+
+    <section class="service" aria-label="Purchase information">
+      <div class="service__intro"><span class="eyebrow">The Atelier standard</span><p>Clear fulfilment, considered packaging, and straightforward support after purchase.</p></div>
+      <div class="service__grid">
+        <article><span>01</span><div><strong>Complimentary delivery</strong><p>Tracked shipping on orders over $120.</p></div></article>
+        <article><span>02</span><div><strong>Secure checkout</strong><p>Protected payment flow managed by CS-Cart.</p></div></article>
+        <article><span>03</span><div><strong>Considered returns</strong><p>Start a return from your account within 30 days.</p></div></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#top">ATELIER <span>SUPPLY</span></a><p>Fictional CS-Cart customization demo built with Smarty hooks, LESS, and progressive JavaScript.</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

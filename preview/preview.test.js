@@ -35,7 +35,9 @@ test('preview includes a substantial commerce flow', () => {
   assert.match(js, /Simulated order complete/);
   assert.match(js, /variants:/);
   assert.match(js, /data-detail-image/);
-  assert.match(js, /finishSelect.*addEventListener/);
+  assert.match(js, /finish-picker/);
+  assert.match(js, /aria-checked/);
+  assert.match(js, /selectedFinish/);
 });
 
 test('visible copy contains no dash punctuation', () => {

@@ -38,12 +38,16 @@ The add-on does not modify platform core files. Test it in a staging environment
 
 The `preview` directory is static and has no checkout, payment, order, or customer backend.
 
+**[Open the live interactive preview](https://vitthegrandfather.github.io/atelier-storefront-cscart/)**
+
 ```bash
 cd preview
 python -m http.server 4173
 ```
 
 Then open `http://127.0.0.1:4173`.
+
+Every push to `main` that changes `preview/` is deployed automatically to GitHub Pages.
 
 ## Verification
 
